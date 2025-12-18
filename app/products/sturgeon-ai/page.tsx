@@ -12,6 +12,7 @@ export default function SturgeonAI() {
   const currentRevenue = currentWins * contractValue;
   const improvedWinRate = winRate * 2.3;
   const newWins = proposals * (improvedWinRate / 100);
+  const newRevenue = newWins * contractValue;  // FIX: Define newRevenue before using it
   const additionalRevenue = newRevenue - currentRevenue;
   const platformCost = 12000;
   const roi = ((additionalRevenue - platformCost) / platformCost * 100).toFixed(0);
