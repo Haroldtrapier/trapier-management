@@ -85,6 +85,12 @@ export default function HomePage() {
                   <svg className="w-6 h-6 text-blue-600 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
+                  <span className="text-gray-700"><strong>ROI Calculator</strong> - Quantify potential savings and revenue opportunities from AI investments</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-6 h-6 text-blue-600 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                   <span className="text-gray-700"><strong>Strategic Roadmap Development</strong> - Custom transformation plans aligned with business goals</span>
                 </li>
                 <li className="flex items-start">
@@ -94,9 +100,14 @@ export default function HomePage() {
                   <span className="text-gray-700"><strong>Executive Workshops</strong> - C-suite alignment on AI strategy and investment priorities</span>
                 </li>
               </ul>
-              <a href="/ai-maturity-assessment" className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-blue-700 transition">
-                Take Free Mini Assessment →
-              </a>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a href="/ai-maturity-assessment" className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-blue-700 transition text-center">
+                  Take Free Mini Assessment →
+                </a>
+                <a href="/roi-calculator" className="inline-block bg-green-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-green-700 transition text-center">
+                  Calculate Your AI ROI →
+                </a>
+              </div>
             </div>
             <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-8 border-2 border-blue-200">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Assessment Framework</h3>
@@ -131,11 +142,30 @@ export default function HomePage() {
               AI System Development
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Building AI Systems for Blue Collar Industries
+              We Build AI Systems for Blue Collar Industries
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We don't just advise - we build production-ready AI systems tailored to the operational realities of traditional industries.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
+              We don't just advise - <strong>we build production-ready AI systems</strong> tailored to the operational realities of traditional industries. From data pipelines to custom ML models to user interfaces, we deliver complete, deployed solutions.
             </p>
+            <div className="bg-white rounded-xl p-6 max-w-4xl mx-auto border-2 border-orange-200 shadow-lg">
+              <div className="grid md:grid-cols-3 gap-6 text-left">
+                <div>
+                  <div className="text-3xl mb-2">🔧</div>
+                  <div className="font-bold text-gray-900 mb-1">Custom Development</div>
+                  <div className="text-sm text-gray-600">We code, train, and deploy AI systems specifically for your operations</div>
+                </div>
+                <div>
+                  <div className="text-3xl mb-2">📊</div>
+                  <div className="font-bold text-gray-900 mb-1">Data Integration</div>
+                  <div className="text-sm text-gray-600">Connect to your existing systems - ERP, CRM, IoT sensors, legacy databases</div>
+                </div>
+                <div>
+                  <div className="text-3xl mb-2">🚀</div>
+                  <div className="font-bold text-gray-900 mb-1">Full Deployment</div>
+                  <div className="text-sm text-gray-600">Operational systems with training, support, and continuous improvement</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -274,7 +304,7 @@ export default function HomePage() {
 
           <div className="text-center mt-12">
             <a href="/contact" className="inline-block bg-orange-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-orange-700 transition">
-              Discuss Your AI System Needs →
+              Discuss Your AI System Development →
             </a>
           </div>
         </div>
