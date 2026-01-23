@@ -3,10 +3,11 @@ import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+import MorganChatWidget from '@/components/MorganChatWidget'
 
 export const metadata: Metadata = {
   title: 'Trapier Management LLC - AI Transformation for Traditional Industries',
-  description: 'Service-Disabled Veteran-Owned AI consulting firm specializing in enterprise AI transformation, multi-agent systems, and government contracting intelligence.',
+  description: 'Service-Connected Disabled Veteran-Owned Small Business (SDVOSB) specializing in AI transformation for Fortune 500 companies in construction, retail, hospitality, and insurance. CAGE Code: 12LN8',
 }
 
 export default function RootLayout({
@@ -21,6 +22,7 @@ export default function RootLayout({
         <Navigation />
         {children}
         <Footer />
+        <MorganChatWidget />
       </body>
     </html>
   )

@@ -3,326 +3,226 @@
 import { useState } from "react";
 
 export default function AIMaturityAssessment() {
-  const [currentDimension, setCurrentDimension] = useState(0);
-  const [scores, setScores] = useState<number[]>(Array(8).fill(0));
-  const [showResults, setShowResults] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState<number[]>([]);
+  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     company: "",
-    industry: ""
+    industry: "",
+    phone: ""
   });
 
-  const dimensions = [
+  const questions = [
     {
-      name: "Data Foundation",
-      description: "Quality, accessibility, and governance of data",
-      levels: [
-        { level: 0, label: "None", description: "No data strategy or infrastructure" },
-        { level: 1, label: "Initial", description: "Basic data collection, ad-hoc" },
-        { level: 2, label: "Developing", description: "Some structure, inconsistent quality" },
-        { level: 3, label: "Defined", description: "Documented processes, good quality" },
-        { level: 4, label: "Managed", description: "Centralized, high quality, measured" },
-        { level: 5, label: "Optimized", description: "Real-time, predictive, enterprise-wide" }
+      question: "How would you describe your organization's current data foundation?",
+      options: [
+        { label: "No centralized data strategy", score: 1 },
+        { label: "Some data collection, mostly siloed", score: 2 },
+        { label: "Centralized data warehouse with decent quality", score: 3 },
+        { label: "Advanced data infrastructure with real-time capabilities", score: 4 }
       ]
     },
     {
-      name: "AI Capability",
-      description: "AI/ML skills, tools, and deployment ability",
-      levels: [
-        { level: 0, label: "None", description: "No AI capabilities" },
-        { level: 1, label: "Initial", description: "Exploratory, proof of concepts" },
-        { level: 2, label: "Developing", description: "Some production models" },
-        { level: 3, label: "Defined", description: "Standard practices, multiple deployments" },
-        { level: 4, label: "Managed", description: "MLOps, automated pipelines" },
-        { level: 5, label: "Optimized", description: "AI-native, continuous innovation" }
+      question: "What's your current level of AI/ML implementation?",
+      options: [
+        { label: "No AI initiatives", score: 1 },
+        { label: "Exploring with proof-of-concepts", score: 2 },
+        { label: "Some production AI models deployed", score: 3 },
+        { label: "AI-driven processes across the organization", score: 4 }
       ]
     },
     {
-      name: "Process Integration",
-      description: "AI embedded in business processes",
-      levels: [
-        { level: 0, label: "None", description: "Manual processes only" },
-        { level: 1, label: "Initial", description: "Isolated automation pilots" },
-        { level: 2, label: "Developing", description: "Some process automation" },
-        { level: 3, label: "Defined", description: "AI in key workflows" },
-        { level: 4, label: "Managed", description: "End-to-end AI-driven processes" },
-        { level: 5, label: "Optimized", description: "Autonomous, self-optimizing processes" }
-      ]
-    },
-    {
-      name: "Talent & Culture",
-      description: "AI skills, mindset, and adoption",
-      levels: [
-        { level: 0, label: "None", description: "No AI awareness" },
-        { level: 1, label: "Initial", description: "Awareness, some training" },
-        { level: 2, label: "Developing", description: "Dedicated AI roles, basic skills" },
-        { level: 3, label: "Defined", description: "AI CoE, widespread literacy" },
-        { level: 4, label: "Managed", description: "AI-first culture, upskilling" },
-        { level: 5, label: "Optimized", description: "Innovation mindset, continuous learning" }
-      ]
-    },
-    {
-      name: "Governance & Ethics",
-      description: "AI policies, compliance, and responsible AI",
-      levels: [
-        { level: 0, label: "None", description: "No governance" },
-        { level: 1, label: "Initial", description: "Basic awareness of risks" },
-        { level: 2, label: "Developing", description: "Some policies, reactive" },
-        { level: 3, label: "Defined", description: "Formal policies, oversight" },
-        { level: 4, label: "Managed", description: "Proactive monitoring, compliance" },
-        { level: 5, label: "Optimized", description: "Ethical AI leadership, industry example" }
-      ]
-    },
-    {
-      name: "Technology Infrastructure",
-      description: "Computing, platforms, and architecture",
-      levels: [
-        { level: 0, label: "None", description: "No AI infrastructure" },
-        { level: 1, label: "Initial", description: "Basic cloud resources" },
-        { level: 2, label: "Developing", description: "Some ML platforms, fragmented" },
-        { level: 3, label: "Defined", description: "Unified platform, scalable" },
-        { level: 4, label: "Managed", description: "Enterprise AI platform, optimized" },
-        { level: 5, label: "Optimized", description: "Cloud-native, auto-scaling, cutting-edge" }
-      ]
-    },
-    {
-      name: "Value Realization",
-      description: "ROI measurement and business impact",
-      levels: [
-        { level: 0, label: "None", description: "No value tracking" },
-        { level: 1, label: "Initial", description: "Anecdotal benefits" },
-        { level: 2, label: "Developing", description: "Some KPIs, inconsistent" },
-        { level: 3, label: "Defined", description: "Measured ROI, business case" },
-        { level: 4, label: "Managed", description: "Continuous value tracking, portfolio" },
-        { level: 5, label: "Optimized", description: "AI as competitive advantage, market leader" }
-      ]
-    },
-    {
-      name: "Innovation & Adaptation",
-      description: "Experimentation and continuous improvement",
-      levels: [
-        { level: 0, label: "None", description: "No innovation culture" },
-        { level: 1, label: "Initial", description: "Ad-hoc experiments" },
-        { level: 2, label: "Developing", description: "Some innovation initiatives" },
-        { level: 3, label: "Defined", description: "Structured innovation process" },
-        { level: 4, label: "Managed", description: "Continuous experimentation, fast iteration" },
-        { level: 5, label: "Optimized", description: "Industry thought leader, R&D driver" }
+      question: "How ready is your team for AI transformation?",
+      options: [
+        { label: "Limited AI awareness", score: 1 },
+        { label: "Some training, growing interest", score: 2 },
+        { label: "Dedicated AI roles and active learning", score: 3 },
+        { label: "AI-first culture with continuous upskilling", score: 4 }
       ]
     }
   ];
 
-  const handleScoreSelect = (score: number) => {
-    const newScores = [...scores];
-    newScores[currentDimension] = score;
-    setScores(newScores);
+  const handleAnswer = (score: number) => {
+    const newAnswers = [...answers, score];
+    setAnswers(newAnswers);
 
-    if (currentDimension < dimensions.length - 1) {
-      setCurrentDimension(currentDimension + 1);
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      setShowForm(true);
     }
   };
 
-  const calculateTotal = () => scores.reduce((a, b) => a + b, 0);
+  const totalScore = answers.reduce((a, b) => a + b, 0);
+  const maxScore = questions.length * 4;
+  const percentage = Math.round((totalScore / maxScore) * 100);
 
-  const getMaturityLevel = (total: number) => {
-    if (total <= 10) return { level: "Beginner", color: "text-red-600" };
-    if (total <= 20) return { level: "Developing", color: "text-orange-600" };
-    if (total <= 30) return { level: "Intermediate", color: "text-yellow-600" };
-    if (total <= 35) return { level: "Advanced", color: "text-blue-600" };
-    return { level: "Optimized", color: "text-green-600" };
+  const getMaturityLevel = () => {
+    if (percentage < 30) return { level: "Beginner", color: "text-red-600", message: "You're in the early stages. Let's build your AI foundation." };
+    if (percentage < 50) return { level: "Developing", color: "text-orange-600", message: "You've started the journey. Let's accelerate your progress." };
+    if (percentage < 75) return { level: "Intermediate", color: "text-yellow-600", message: "You're making progress. Let's optimize your AI strategy." };
+    return { level: "Advanced", color: "text-green-600", message: "You're well positioned. Let's maximize your competitive advantage." };
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setShowResults(true);
-    // Here you would send data to backend/n8n webhook
+    // Here you would send to backend/n8n webhook
+    console.log("Form submitted:", { ...formData, score: totalScore, answers });
+
+    // Redirect to calendly or show success message
+    window.location.href = "/contact?assessment=complete&score=" + totalScore;
   };
 
-  const totalScore = calculateTotal();
-  const maturity = getMaturityLevel(totalScore);
-
-  if (showResults) {
-    return (
-      <main className="min-h-screen bg-gray-50 py-20">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <h1 className="text-4xl font-bold text-center mb-8">
-              Your AI Maturity Assessment Results
-            </h1>
-
-            <div className="text-center mb-12">
-              <div className="text-6xl font-bold mb-4">{totalScore}/40</div>
-              <div className={`text-3xl font-bold ${maturity.color}`}>
-                {maturity.level}
-              </div>
-            </div>
-
-            <div className="space-y-4 mb-12">
-              {dimensions.map((dim, idx) => (
-                <div key={idx} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div className="flex-1">
-                    <div className="font-semibold">{dim.name}</div>
-                    <div className="text-sm text-gray-600">{dim.description}</div>
-                  </div>
-                  <div className="text-2xl font-bold text-blue-600 ml-4">
-                    {scores[idx]}/5
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 mb-8">
-              <h3 className="text-xl font-bold mb-4">Personalized Recommendations</h3>
-              <ul className="space-y-2 text-sm">
-                {scores[0] < 3 && (
-                  <li>• <strong>Data Foundation:</strong> Establish a data governance framework and centralize data sources</li>
-                )}
-                {scores[1] < 3 && (
-                  <li>• <strong>AI Capability:</strong> Invest in AI training for your team and hire ML specialists</li>
-                )}
-                {scores[2] < 3 && (
-                  <li>• <strong>Process Integration:</strong> Identify high-value processes for AI automation</li>
-                )}
-                {scores[3] < 3 && (
-                  <li>• <strong>Talent & Culture:</strong> Create an AI Center of Excellence to drive adoption</li>
-                )}
-              </ul>
-            </div>
-
-            <div className="text-center">
-              <a href="/contact" className="inline-block bg-blue-900 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-800 transition">
-                Book Your Strategy Consultation →
-              </a>
-            </div>
-          </div>
-        </div>
-      </main>
-    );
-  }
-
-  if (currentDimension < dimensions.length) {
-    const currentDim = dimensions[currentDimension];
+  if (showForm) {
+    const maturity = getMaturityLevel();
 
     return (
       <main className="min-h-screen bg-gradient-to-br from-blue-900 to-indigo-900 py-20">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <div className="mb-8">
-              <div className="flex justify-between text-sm text-gray-600 mb-2">
-                <span>Question {currentDimension + 1} of {dimensions.length}</span>
-                <span>{Math.round(((currentDimension) / dimensions.length) * 100)}% Complete</span>
+        <div className="max-w-2xl mx-auto px-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-8">
+            <div className="text-center mb-8">
+              <div className="text-6xl font-bold text-blue-900 mb-2">{percentage}%</div>
+              <div className={`text-2xl font-bold mb-4 ${maturity.color}`}>
+                {maturity.level}
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div 
-                  className="bg-blue-600 h-2 rounded-full transition-all"
-                  style={{ width: `${((currentDimension) / dimensions.length) * 100}%` }}
+              <p className="text-lg text-gray-700">
+                {maturity.message}
+              </p>
+            </div>
+
+            <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 mb-8">
+              <h3 className="font-bold text-lg mb-2">📅 Book Your Strategy Session</h3>
+              <p className="text-sm text-gray-700 mb-4">
+                Get a personalized AI transformation roadmap in a 30-minute consultation with our experts.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold mb-2">Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="John Smith"
                 />
               </div>
-            </div>
-
-            <h2 className="text-3xl font-bold mb-4">{currentDim.name}</h2>
-            <p className="text-gray-600 mb-8">{currentDim.description}</p>
-
-            <div className="space-y-4">
-              {currentDim.levels.map((levelData) => (
-                <button
-                  key={levelData.level}
-                  onClick={() => handleScoreSelect(levelData.level)}
-                  className="w-full text-left p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition group"
+              <div>
+                <label className="block text-sm font-semibold mb-2">Email *</label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="john@company.com"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">Company *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.company}
+                  onChange={(e) => setFormData({...formData, company: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="ABC Construction"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">Industry *</label>
+                <select
+                  required
+                  value={formData.industry}
+                  onChange={(e) => setFormData({...formData, industry: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xl font-bold group-hover:text-blue-600">
-                      {levelData.label}
-                    </span>
-                    <span className="text-2xl font-bold text-gray-400 group-hover:text-blue-600">
-                      {levelData.level}
-                    </span>
-                  </div>
-                  <p className="text-gray-600 text-sm">{levelData.description}</p>
-                </button>
-              ))}
-            </div>
-
-            {currentDimension > 0 && (
+                  <option value="">Select Industry</option>
+                  <option value="construction">Construction</option>
+                  <option value="retail">Retail</option>
+                  <option value="hospitality">Hospitality</option>
+                  <option value="insurance">Insurance</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">Phone</label>
+                <input
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="(555) 123-4567"
+                />
+              </div>
               <button
-                onClick={() => setCurrentDimension(currentDimension - 1)}
-                className="mt-8 text-blue-600 font-semibold hover:text-blue-700"
+                type="submit"
+                className="w-full bg-blue-900 text-white py-4 rounded-lg font-bold text-lg hover:bg-blue-800 transition"
               >
-                ← Previous Question
+                Book My Strategy Session →
               </button>
-            )}
+            </form>
           </div>
         </div>
       </main>
     );
   }
 
-  // Contact form before showing results
+  const currentQ = questions[currentQuestion];
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-900 to-indigo-900 py-20">
-      <div className="max-w-2xl mx-auto px-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-3xl font-bold mb-6 text-center">
-            Get Your Personalized Results
-          </h2>
-          <p className="text-gray-600 text-center mb-8">
-            Enter your information to receive your detailed AI maturity report and custom recommendations.
-          </p>
+      <div className="max-w-3xl mx-auto px-4">
+        <div className="bg-white rounded-2xl shadow-2xl p-8">
+          <div className="mb-8">
+            <div className="flex justify-between text-sm text-gray-600 mb-2">
+              <span>Question {currentQuestion + 1} of {questions.length}</span>
+              <span>{Math.round(((currentQuestion) / questions.length) * 100)}% Complete</span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div 
+                className="bg-blue-600 h-2 rounded-full transition-all"
+                style={{ width: `${((currentQuestion) / questions.length) * 100}%` }}
+              />
+            </div>
+          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold mb-2">Name</label>
-              <input
-                type="text"
-                required
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2">Email</label>
-              <input
-                type="email"
-                required
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2">Company</label>
-              <input
-                type="text"
-                required
-                value={formData.company}
-                onChange={(e) => setFormData({...formData, company: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2">Industry</label>
-              <select
-                required
-                value={formData.industry}
-                onChange={(e) => setFormData({...formData, industry: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          <h2 className="text-3xl font-bold mb-8 text-gray-900">{currentQ.question}</h2>
+
+          <div className="space-y-4">
+            {currentQ.options.map((option, idx) => (
+              <button
+                key={idx}
+                onClick={() => handleAnswer(option.score)}
+                className="w-full text-left p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition group"
               >
-                <option value="">Select Industry</option>
-                <option value="construction">Construction</option>
-                <option value="retail">Retail</option>
-                <option value="hospitality">Hospitality</option>
-                <option value="insurance">Insurance</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-medium group-hover:text-blue-600">
+                    {option.label}
+                  </span>
+                  <svg className="w-6 h-6 text-gray-400 group-hover:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {currentQuestion > 0 && (
             <button
-              type="submit"
-              className="w-full bg-blue-900 text-white py-4 rounded-lg font-bold text-lg hover:bg-blue-800 transition"
+              onClick={() => {
+                setCurrentQuestion(currentQuestion - 1);
+                setAnswers(answers.slice(0, -1));
+              }}
+              className="mt-8 text-blue-600 font-semibold hover:text-blue-700"
             >
-              View My Results →
+              ← Previous Question
             </button>
-          </form>
+          )}
         </div>
       </div>
     </main>
