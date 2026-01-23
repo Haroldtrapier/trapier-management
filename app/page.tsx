@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Trapier Management LLC - AI Transformation & Strategic Consulting",
-  description: "Service-Connected Disabled Veteran-Owned Small Business (SDVOSB) providing AI Maturity Assessments for Fortune 500, AI Systems for Blue Collar Industries, and GovCon Intelligence. CAGE Code: 12LN8. Charlotte, NC.",
+  description: "Service-Connected Disabled Veteran-Owned Small Business (SDVOSB) providing AI Maturity Assessments for Fortune 500, AI Systems for Blue Collar Industries, and GovCon Intelligence. CAGE Code: 12LN8",
 };
 
 export default function HomePage() {
@@ -19,7 +19,7 @@ export default function HomePage() {
           <div className="max-w-3xl">
             <div className="flex items-center gap-4 mb-6 flex-wrap">
               <div className="backdrop-blur-md bg-white/10 border border-white/20 px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-                🎖️ Service-Connected Disabled Veteran-Owned Small Business
+                🏅 Service-Connected Disabled Veteran-Owned Small Business
               </div>
               <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-4 py-2 rounded-full text-sm font-bold shadow-lg">
                 ⚡ CAGE Code: 12LN8
@@ -29,7 +29,7 @@ export default function HomePage() {
               Transform Your Business with AI Intelligence
             </h1>
             <p className="text-2xl mb-8 text-blue-100 font-light">
-              From Fortune 500 strategy to building production AI systems. <span className="text-yellow-300 font-semibold">Charlotte, North Carolina.</span>
+              From Fortune 500 strategy to building production AI systems. <span className="text-yellow-300 font-semibold">Serving businesses nationwide.</span>
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a href="/ai-maturity-assessment" className="group relative bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-8 py-5 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-yellow-500/50 transition-all transform hover:scale-105 text-center">
@@ -63,8 +63,8 @@ export default function HomePage() {
               <div className="text-sm text-gray-600 font-medium">🏛️ CAGE Code</div>
             </div>
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-green-100 hover:shadow-xl transition-all transform hover:scale-105">
-              <div className="text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">Charlotte</div>
-              <div className="text-sm text-gray-600 font-medium">📍 North Carolina</div>
+              <div className="text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">Nationwide</div>
+              <div className="text-sm text-gray-600 font-medium">🌎 Service Area</div>
             </div>
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-indigo-100 hover:shadow-xl transition-all transform hover:scale-105">
               <div className="text-4xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">4</div>
