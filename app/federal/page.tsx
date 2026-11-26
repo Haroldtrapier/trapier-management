@@ -32,6 +32,7 @@ export default function FederalPage() {
     ['Business type', site.certification],
     ['CAGE code', <span key="c" className="font-mono">{site.cage}</span>],
     ['UEI', <span key="u" className="font-mono">{site.uei}</span>],
+    ['SAM.gov registration', site.samStatus],
     ['NAICS codes', <Placeholder key="n" name="naics_codes" />],
     ['PSC codes', <Placeholder key="p" name="psc_codes" />],
     ['Contract vehicles', <Placeholder key="v" name="contract_vehicles" />],
@@ -44,7 +45,7 @@ export default function FederalPage() {
         <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="container-page relative py-24 lg:py-32">
           <p className="eyebrow flex items-center gap-2"><Icon name="flag" className="h-4 w-4" />For federal buyers and primes</p>
-          <h1 className="heading-1 mt-6 max-w-4xl text-ink">An AI partner your contracting office can actually use.</h1>
+          <h1 className="heading-1 mt-6 max-w-4xl text-ink">An AI partner built for federal work.</h1>
           <p className="body-1 mt-8 max-w-prose text-ink-secondary">
             Trapier Management is an SBA-certified service-disabled veteran-owned small business. We assess, build and train for AI work, and we team with primes that need SDVOSB participation.
           </p>

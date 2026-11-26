@@ -10,6 +10,8 @@ export const site = {
   cage: '12LN8',
   uei: 'L6BAD35CZS74',
   certification: 'SBA-certified Service-Disabled Veteran-Owned Small Business (SDVOSB)',
+  // Change to 'Active' only after SAM.gov shows the registration as Active.
+  samStatus: 'Renewal submitted, pending activation',
   // Placeholders Harold must fill before launch.
   naics: '{{naics_codes}}',
   psc: '{{psc_codes}}',
