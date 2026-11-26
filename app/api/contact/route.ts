@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-async function sendWithGmail(name: string, email: string, company: string, phone: string, message: string) {
+const esc = (v: unknown) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
+
+async function sendWithGmail(name: string, email: string, company: string, phone: string, message: string, topic = '', score = '') {
   const GMAIL_USER = process.env.GMAIL_USER;
   const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD;
   const TO_EMAIL = process.env.CONTACT_EMAIL_TO || GMAIL_USER;
@@ -21,12 +23,14 @@ async function sendWithGmail(name: string, email: string, company: string, phone
     subject: `New Contact Form: ${name}`,
     html: `
       <h2>New Contact Form Submission</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Company:</strong> ${company || 'Not provided'}</p>
-      <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+      <p><strong>Name:</strong> ${esc(name)}</p>
+      <p><strong>Email:</strong> ${esc(email)}</p>
+      <p><strong>Company:</strong> ${esc(company) || 'Not provided'}</p>
+      <p><strong>Phone:</strong> ${esc(phone) || 'Not provided'}</p>
+      <p><strong>Topic:</strong> ${esc(topic) || 'Not provided'}</p>
+      <p><strong>Readiness score:</strong> ${score ? esc(score) + '%' : 'Not taken'}</p>
       <p><strong>Message:</strong></p>
-      <p>${message.replace(/\n/g, '<br>')}</p>
+      <p>${esc(message).replace(/\n/g, '<br>')}</p>
       <hr>
       <p><small>Submitted: ${new Date().toLocaleString()}</small></p>
     `,
@@ -38,7 +42,7 @@ async function sendWithGmail(name: string, email: string, company: string, phone
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, company, phone, message } = body;
+    const { name, email, company, phone, message, topic, score } = body;
 
     if (!name || !email || !message) {
       return NextResponse.json({ error: 'Name, email, and message are required' }, { status: 400 });
@@ -50,7 +54,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
-      await sendWithGmail(name, email, company, phone, message);
+      await sendWithGmail(name, email, company, phone, message, topic, score);
       return NextResponse.json({ success: true, message: 'Thank you for your message!' }, { status: 200 });
     }
 

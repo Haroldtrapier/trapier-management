@@ -1,45 +1,53 @@
-import Link from "next/link";
+import Link from 'next/link';
+import { Wordmark } from './Navigation';
+import { site } from '@/lib/site';
+
+const cols = [
+  { title: 'Company', links: [ { href: '/about', label: 'About' }, { href: '/federal', label: 'Federal buyers' }, { href: '/contact', label: 'Contact' } ] },
+  { title: 'Platforms', links: [ { href: site.platforms.sturgeon, label: 'Sturgeon AI', ext: true }, { href: site.platforms.govcon, label: 'GovCon Command Center', ext: true }, { href: '/contact?topic=capture-desk', label: 'Capture Desk' } ] },
+  { title: 'Resources', links: [ { href: '/ai-maturity-assessment', label: 'AI readiness score' }, { href: '/ai-maturity-model', label: 'AI Maturity Model' } ] },
+];
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
+  const year = new Date().getFullYear();
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          <div>
-            <h3 className="text-white text-xl font-bold mb-4">Trapier Management LLC</h3>
-            <p className="text-gray-400 mb-4">
-              Service-Disabled Veteran-Owned Small Business specializing in AI transformation for traditional industries.
+    <footer className="theme-dark border-t border-line bg-surface text-ink">
+      <div className="container-page py-16">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <Link href="/" className="inline-flex min-h-11 items-center rounded-lg text-ink" aria-label="Trapier Management home"><Wordmark /></Link>
+            <p className="body-3 mt-6 max-w-sm text-ink-secondary">
+              A service-disabled veteran-owned firm that finds where AI pays back, builds it, and trains your people to run it.
             </p>
-            <div className="flex items-center space-x-2 text-sm">
-              <span className="bg-blue-900 text-white px-3 py-1 rounded">SDVOSB Certified</span>
+            <dl className="mt-8 grid max-w-sm grid-cols-2 gap-4">
+              <div><dt className="caption-2 text-ink-muted">CAGE</dt><dd className="mt-1 font-mono text-sm text-ink">{site.cage}</dd></div>
+              <div><dt className="caption-2 text-ink-muted">UEI</dt><dd className="mt-1 font-mono text-sm text-ink">{site.uei}</dd></div>
+            </dl>
+            <a href={`mailto:${site.email}`} className="body-3 mt-8 inline-flex min-h-11 items-center text-ink-accent underline-offset-4 hover:underline">{site.email}</a>
+          </div>
+          {cols.map((c) => (
+            <div key={c.title} className="lg:col-span-2">
+              <h2 className="caption-2 text-ink-muted">{c.title}</h2>
+              <ul className="mt-4 space-y-2">
+                {c.links.map((l) => (
+                  <li key={l.label}>
+                    {'ext' in l && l.ext ? (
+                      <a href={l.href} className="body-4 inline-flex min-h-11 items-center text-ink-secondary hover:text-ink" target="_blank" rel="noopener noreferrer">{l.label}<span className="sr-only"> (opens in a new tab)</span></a>
+                    ) : (
+                      <Link href={l.href} className="body-4 inline-flex min-h-11 items-center text-ink-secondary hover:text-ink">{l.label}</Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="mt-4">
-              <p className="text-sm text-gray-400">Charlotte, North Carolina</p>
-              <a href="mailto:info@trapiermanagement.com" className="text-sm text-blue-400 hover:text-blue-300">
-                info@trapiermanagement.com
-              </a>
-            </div>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold mb-4">Solutions</h4>
-            <ul className="space-y-2">
-              <li><Link href="/ai-maturity-model" className="hover:text-white transition">AI Maturity Model</Link></li>
-              <li><Link href="/ai-maturity-assessment" className="hover:text-white transition">Free Assessment</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold mb-4">Company</h4>
-            <ul className="space-y-2">
-              <li><Link href="/contact" className="hover:text-white transition">Contact Us</Link></li>
-            </ul>
-          </div>
+          ))}
         </div>
-        <div className="border-t border-gray-800 pt-8">
-          <p className="text-sm text-gray-400 text-center">
-            © {currentYear} Trapier Management LLC. All rights reserved.
-          </p>
+        <div className="mt-16 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="caption-3 text-ink-muted">© {year} {site.legalName}. {site.certification}.</p>
+          <ul className="flex gap-6">
+            <li><Link href="/privacy" className="caption-3 inline-flex min-h-11 items-center text-ink-muted hover:text-ink">Privacy policy</Link></li>
+            <li><Link href="/terms" className="caption-3 inline-flex min-h-11 items-center text-ink-muted hover:text-ink">Terms of use</Link></li>
+          </ul>
         </div>
       </div>
     </footer>

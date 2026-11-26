@@ -1,109 +1,98 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useState } from "react";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import Icon from './Icon';
+import { primaryCta } from '@/lib/site';
+
+const links = [
+  { href: '/#approach', label: 'Approach', match: '/#approach' },
+  { href: '/federal', label: 'Federal', match: '/federal' },
+  { href: '/#platforms', label: 'Platforms', match: '/#platforms' },
+  { href: '/about', label: 'About', match: '/about' },
+  { href: '/contact', label: 'Contact', match: '/contact' },
+];
+
+export function Wordmark({ className = '' }: { className?: string }) {
+  return (
+    <span className={`flex items-center gap-3 ${className}`}>
+      <svg viewBox="0 0 32 32" className="h-8 w-8" aria-hidden="true">
+        <rect width="32" height="32" rx="8" className="fill-navy-900" />
+        <path d="M9 10h14M16 10v13" stroke="#D2AA4B" strokeWidth="2.5" strokeLinecap="round" />
+      </svg>
+      <span className="text-base font-semibold tracking-tight">Trapier Management</span>
+    </span>
+  );
+}
 
 export default function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isProductsOpen, setIsProductsOpen] = useState(false);
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  useEffect(() => setOpen(false), [pathname]);
+
+  const isCurrent = (match: string) => !match.includes('#') && (pathname === match || pathname.startsWith(match + '/'));
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="text-2xl font-bold text-blue-900">Trapier Management</div>
-          </Link>
+    <header className={`theme-dark sticky top-0 z-50 border-b transition-colors duration-300 ease-brand ${scrolled || open ? 'border-line bg-surface/90 backdrop-blur-md' : 'border-transparent bg-surface'}`}>
+      <nav className="container-page flex h-16 items-center justify-between" aria-label="Main">
+        <Link href="/" className="inline-flex min-h-11 items-center rounded-lg text-ink" aria-label="Trapier Management home">
+          <Wordmark />
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/ai-maturity-model" className="text-gray-700 hover:text-blue-900 font-medium transition">
-              AI Maturity Model
-            </Link>
-
-            {/* Products Dropdown */}
-            <div className="relative group">
-              <button className="text-gray-700 hover:text-blue-900 font-medium transition flex items-center">
-                Products
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <div className="absolute left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white border border-gray-200 rounded-lg shadow-lg">
-                <Link href="/products/sturgeon-ai" className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-blue-900 transition rounded-t-lg">
-                  <div className="font-medium">Sturgeon AI</div>
-                  <div className="text-sm text-gray-500">GovCon Intelligence</div>
+        <div className="hidden items-center gap-8 lg:flex">
+          <ul className="flex items-center gap-8">
+            {links.map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  aria-current={isCurrent(l.match) ? 'page' : undefined}
+                  className="body-4 font-medium text-ink-secondary transition-colors duration-300 ease-brand hover:text-ink aria-[current=page]:text-ink aria-[current=page]:underline aria-[current=page]:decoration-gold-500 aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8"
+                >
+                  {l.label}
                 </Link>
-                <Link href="/products/harpoon-ai" className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-blue-900 transition">
-                  <div className="font-medium">Harpoon AI</div>
-                  <div className="text-sm text-gray-500">Sales Automation</div>
-                </Link>
-                <Link href="/products/empire-build-lab" className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-blue-900 transition rounded-b-lg">
-                  <div className="font-medium">Empire Build Lab</div>
-                  <div className="text-sm text-gray-500">Custom AI Development</div>
-                </Link>
-              </div>
-            </div>
-
-            <Link href="/contact" className="text-gray-700 hover:text-blue-900 font-medium transition">
-              Contact
-            </Link>
-            <Link href="/ai-maturity-assessment" className="bg-blue-900 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-800 transition">
-              Free Assessment
-            </Link>
-          </div>
-
-          {/* Mobile menu button */}
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden text-gray-700 hover:text-blue-900 focus:outline-none">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+              </li>
+            ))}
+          </ul>
+          <Link href={primaryCta.href} className="btn-md btn-primary">{primaryCta.label}</Link>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
-            <Link href="/ai-maturity-model" className="block py-2 text-gray-700 hover:text-blue-900 font-medium" onClick={() => setIsMenuOpen(false)}>
-              AI Maturity Model
-            </Link>
+        <button
+          type="button"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-surface-sunken lg:hidden"
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <Icon name={open ? 'x' : 'list'} />
+        </button>
+      </nav>
 
-            {/* Mobile Products Dropdown */}
-            <div className="py-2">
-              <button onClick={() => setIsProductsOpen(!isProductsOpen)} className="w-full text-left font-medium text-gray-900 flex items-center justify-between">
-                Products
-                <svg className={`w-4 h-4 transition-transform ${isProductsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {isProductsOpen && (
-                <div className="pl-4 mt-2 space-y-2">
-                  <Link href="/products/sturgeon-ai" className="block py-2 text-gray-700 hover:text-blue-900" onClick={() => setIsMenuOpen(false)}>
-                    Sturgeon AI
-                  </Link>
-                  <Link href="/products/harpoon-ai" className="block py-2 text-gray-700 hover:text-blue-900" onClick={() => setIsMenuOpen(false)}>
-                    Harpoon AI
-                  </Link>
-                  <Link href="/products/empire-build-lab" className="block py-2 text-gray-700 hover:text-blue-900" onClick={() => setIsMenuOpen(false)}>
-                    Empire Build Lab
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            <Link href="/contact" className="block py-2 text-gray-700 hover:text-blue-900 font-medium" onClick={() => setIsMenuOpen(false)}>
-              Contact
-            </Link>
-            <Link href="/ai-maturity-assessment" className="block mt-4 bg-blue-900 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-800 transition text-center" onClick={() => setIsMenuOpen(false)}>
-              Free Assessment
-            </Link>
-          </div>
-        )}
-      </div>
-    </nav>
+      {open && (
+        <div id="mobile-menu" className="border-t border-line bg-surface lg:hidden">
+          <ul className="container-page flex flex-col py-4">
+            {links.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} aria-current={isCurrent(l.match) ? 'page' : undefined} className="flex min-h-11 items-center text-lg font-medium text-ink aria-[current=page]:text-ink-accent" onClick={() => setOpen(false)}>
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+            <li className="pt-4">
+              <Link href={primaryCta.href} className="btn-lg btn-primary w-full" onClick={() => setOpen(false)}>{primaryCta.label}</Link>
+            </li>
+          </ul>
+        </div>
+      )}
+    </header>
   );
 }

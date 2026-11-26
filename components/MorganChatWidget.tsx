@@ -75,7 +75,7 @@ export default function MorganChatWidget() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-110 flex items-center justify-center text-white z-50"
+          className="fixed bottom-6 right-6 w-14 h-14 bg-navy-900 border border-navy-700 rounded-full shadow-lg shadow-black/30 transition-transform duration-300 hover:scale-105 flex items-center justify-center text-gold-400 z-40"
           aria-label="Open chat"
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,16 +86,16 @@ export default function MorganChatWidget() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden">
+        <div className="fixed bottom-6 right-6 w-[calc(100vw-48px)] max-w-sm h-[600px] max-h-[calc(100vh-48px)] bg-white rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 flex items-center justify-between">
+          <div className="bg-navy-900 text-white p-4 flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center font-bold">
                 M
               </div>
               <div>
                 <div className="font-bold">Morgan AI</div>
-                <div className="text-xs text-purple-100">Online</div>
+                <div className="text-xs text-navy-200">Online</div>
               </div>
             </div>
             <button
@@ -118,7 +118,7 @@ export default function MorganChatWidget() {
                 <div
                   className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                     message.role === "user"
-                      ? "bg-blue-600 text-white"
+                      ? "bg-navy-900 text-white"
                       : "bg-white text-gray-800 shadow-sm"
                   }`}
                 >
@@ -149,13 +149,13 @@ export default function MorganChatWidget() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400 text-sm"
                 disabled={isLoading}
               />
               <button
                 onClick={sendMessage}
                 disabled={isLoading || !input.trim()}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-navy-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-navy-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Send
               </button>

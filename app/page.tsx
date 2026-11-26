@@ -1,420 +1,289 @@
-export const metadata = {
-  title: "Trapier Management LLC - AI Transformation & Strategic Consulting",
-  description: "Service-Connected Disabled Veteran-Owned Small Business (SDVOSB) providing AI Maturity Assessments for Fortune 500, AI Systems for Blue Collar Industries, and GovCon Intelligence. CAGE Code: 12LN8",
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import Icon from '@/components/Icon';
+import Faq, { faqSchema, type FaqItem } from '@/components/Faq';
+import CtaBand from '@/components/CtaBand';
+import MaturityVisual from '@/components/MaturityVisual';
+import Placeholder from '@/components/Placeholder';
+import { primaryCta, site } from '@/lib/site';
+
+export const metadata: Metadata = {
+  title: { absolute: 'Trapier Management | AI that pays back, built by an SDVOSB' },
+  description: 'We find where AI pays back in your operation, build the systems, and train your people to run them. Service-disabled veteran-owned. CAGE 12LN8.',
+  alternates: { canonical: '/' },
 };
 
-export default function HomePage() {
+const steps = [
+  {
+    n: '01', icon: 'compass' as const, title: 'Assess',
+    body: 'We score your organization on the Trapier AI Maturity Model and map the workflows where AI will save hours or make money first. You get a ranked list of use cases with a business case for each one.',
+    out: ['Maturity score across 8 dimensions', 'Ranked use cases with ROI logic', 'A 90-day roadmap'],
+  },
+  {
+    n: '02', icon: 'cpu' as const, title: 'Build',
+    body: 'We build the agents, automations and integrations your roadmap calls for, connected to the tools you already run. Nothing ships without test cases, guardrails and logging, because if it cannot be measured, it is not done.',
+    out: ['Working systems, not prototypes', 'Evals and guardrails on every agent', 'Integrations with your current stack'],
+  },
+  {
+    n: '03', icon: 'graduation' as const, title: 'Train and run',
+    body: 'We train the people who will own the system and track the value it produces against the business case. When it works, we scale it. When it does not, we cut it and say so.',
+    out: ['Hands-on training for your team', 'Value tracked against the plan', 'A clear owner for every system'],
+  },
+];
+
+const stalls = [
+  ['No business case', 'The project started with a tool, not a problem that costs money.'],
+  ['No workflow map', 'Nobody wrote down how the work actually gets done before automating it.'],
+  ['No owner', 'The pilot worked, then nobody on the team was trained to run it.'],
+];
+
+const audiences = [
+  {
+    icon: 'flag' as const, title: 'Federal agencies and primes', href: '/federal', link: 'For federal buyers',
+    body: 'An SBA-certified SDVOSB that can assess, build and train for AI work, and a teaming partner for primes that need SDVOSB participation.',
+  },
+  {
+    icon: 'building' as const, title: 'Traditional industries', href: '/contact?topic=assessment', link: 'Talk about your operation',
+    body: 'Construction, retail, hospitality and insurance teams with real operational problems and no appetite for science projects.',
+  },
+  {
+    icon: 'target' as const, title: 'Small and veteran-owned contractors', href: '/#platforms', link: 'See the platforms',
+    body: 'Firms trying to win federal work, with software and capture support built by people who have chased those contracts themselves.',
+  },
+];
+
+const platforms = [
+  { name: 'Sturgeon AI', tag: 'Federal opportunity intelligence', body: 'Finds federal opportunities that fit your company and helps you decide what is worth bidding.', href: site.platforms.sturgeon, ext: true, cta: 'Visit Sturgeon AI' },
+  { name: 'GovCon Command Center', tag: 'Federal contracting education', body: 'Free training that teaches small businesses how federal buying works and how to compete for it.', href: site.platforms.govcon, ext: true, cta: 'Visit GovCon Command Center' },
+  { name: 'Capture Desk', tag: 'Done-with-you capture support', body: 'Hands-on help qualifying an opportunity, deciding bid or no-bid, and getting a compliant response out the door.', href: '/contact?topic=capture-desk', ext: false, cta: 'Ask about Capture Desk' },
+];
+
+const faqs: FaqItem[] = [
+  { q: 'What does the free AI readiness score involve?', a: 'Three questions about your data, your current AI use and your team. Your score shows on screen right away. If you want to go further, you can book a strategy session from the results page. Nothing is required to see your score.' },
+  { q: 'How is that different from the full AI Maturity Assessment?', a: 'The free score is a quick read. The full assessment is a paid engagement that scores your organization across all 8 dimensions of the Trapier AI Maturity Model, maps your workflows, and ends with ranked use cases and a 90-day roadmap.' },
+  { q: 'Do you only advise, or do you build?', a: 'We build. The assessment tells us what is worth building, and then our team builds and connects the systems, tests them, and trains the people who will run them.' },
+  { q: 'What industries do you work with?', a: 'Federal agencies and their primes, and traditional industries such as construction, retail, hospitality and insurance. We also support small and veteran-owned contractors through our GovCon platforms.' },
+  { q: 'Can federal agencies contract with Trapier directly?', a: 'Trapier Management LLC is an SBA-certified Service-Disabled Veteran-Owned Small Business, CAGE 12LN8. Our federal page lists our identifiers and how to request a capability statement.' },
+  { q: 'Will AI replace our people?', a: 'That is not how we design it. We target the repetitive work that eats your team’s week, and we train your people to own the systems. Every customer-facing step keeps a human check.' },
+  { q: 'How do you handle our data?', a: 'We work inside the tools and permissions you approve, and we put guardrails on every agent we ship. Specific security and data-handling terms are set in each engagement agreement.' },
+  { q: 'What does an engagement cost?', a: 'It depends on scope, and we quote it after the assessment so you know exactly what you are paying for and why. There is no charge for the readiness score or the first conversation.' },
+];
+
+export default function Home() {
   return (
-    <main className="overflow-hidden">
-      {/* Hero Section - Futuristic AI Theme */}
-      <section className="relative bg-gradient-to-br from-blue-950 via-purple-900 to-indigo-950 text-white overflow-hidden">
-        {/* Animated background gradient orbs */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute w-96 h-96 -top-48 -left-48 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute w-96 h-96 -bottom-48 -right-48 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-          <div className="absolute w-96 h-96 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-indigo-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-        </div>
-        
-        <div className="relative max-w-6xl mx-auto px-4 py-24">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-4 mb-6 flex-wrap">
-              <div className="backdrop-blur-md bg-white/10 border border-white/20 px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-                🏅 Service-Connected Disabled Veteran-Owned Small Business
-              </div>
-              <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                ⚡ CAGE Code: 12LN8
-              </div>
-            </div>
-            <h1 className="text-6xl font-extrabold mb-6 leading-tight bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-              Transform Your Business with AI Intelligence
+    <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />
+
+      {/* Hero */}
+      <section className="theme-dark relative overflow-hidden bg-surface">
+        <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="pointer-events-none absolute -top-40 right-0 h-[480px] w-[480px] rounded-full bg-gold-500/10 blur-3xl" aria-hidden="true" />
+        <div className="container-page relative grid items-center gap-16 py-24 lg:grid-cols-12 lg:py-32">
+          <div className="lg:col-span-7">
+            <p className="eyebrow flex items-center gap-2"><Icon name="shield" className="h-4 w-4" />Service-disabled veteran-owned</p>
+            <h1 className="heading-1 mt-6 max-w-prose text-ink">
+              AI that pays back.<br />Built, proven and run by your team.
             </h1>
-            <p className="text-2xl mb-8 text-blue-100 font-light">
-              From Fortune 500 strategy to building production AI systems. <span className="text-yellow-300 font-semibold">Serving businesses nationwide.</span>
+            <p className="body-1 mt-8 max-w-prose text-ink-secondary">
+              Trapier Management finds where AI saves time or makes money in your operation, builds the systems, and trains your people to run them.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a href="/ai-maturity-assessment" className="group relative bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-8 py-5 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-yellow-500/50 transition-all transform hover:scale-105 text-center">
-                <span className="relative z-10">🚀 Free AI Maturity Assessment</span>
-              </a>
-              <a href="/contact" className="backdrop-blur-md bg-white/10 border-2 border-white/30 text-white px-8 py-5 rounded-xl font-bold text-lg hover:bg-white/20 hover:shadow-xl transition-all text-center">
-                📞 Book Consultation
-              </a>
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <Link href={primaryCta.href} className="btn-lg btn-primary">
+                {primaryCta.label}
+                <Icon name="arrow-right" className="h-5 w-5" />
+              </Link>
+              <p className="body-4 text-ink-muted">Free. Three questions. Your score on screen.</p>
             </div>
-          </div>
-        </div>
-
-        {/* Animated bottom wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" className="w-full h-16">
-            <path fill="#f9fafb" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
-          </svg>
-        </div>
-      </section>
-
-      {/* Trust Signals - Modern Glass Design */}
-      <section className="bg-gray-50 py-12">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-blue-100 hover:shadow-xl transition-all transform hover:scale-105">
-              <div className="text-4xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">SDVOSB</div>
-              <div className="text-sm text-gray-600 font-medium">✅ Certified Veteran-Owned</div>
-            </div>
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-yellow-100 hover:shadow-xl transition-all transform hover:scale-105">
-              <div className="text-4xl font-black bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent mb-2">12LN8</div>
-              <div className="text-sm text-gray-600 font-medium">🏛️ CAGE Code</div>
-            </div>
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-green-100 hover:shadow-xl transition-all transform hover:scale-105">
-              <div className="text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">Nationwide</div>
-              <div className="text-sm text-gray-600 font-medium">🌎 Service Area</div>
-            </div>
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-indigo-100 hover:shadow-xl transition-all transform hover:scale-105">
-              <div className="text-4xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">4</div>
-              <div className="text-sm text-gray-600 font-medium">🎯 Service Verticals</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 1: Fortune 500 - Modern Gradient Design */}
-      <section className="py-24 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl"></div>
-        <div className="relative max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-full text-sm font-bold mb-6 shadow-lg">
-                <span>🏢</span> Fortune 500 Consulting
-              </div>
-              <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
-                AI Maturity Models & <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Strategic Assessment</span>
-              </h2>
-              <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-                Enterprise-grade AI readiness assessments for large organizations. We evaluate your current capabilities, identify gaps, and create strategic transformation roadmaps.
-              </p>
-              <div className="space-y-4 mb-10">
-                <div className="flex items-start gap-4 group">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-lg">Comprehensive Maturity Assessment</div>
-                    <div className="text-gray-600">Evaluate AI readiness across your organization</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 group">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-lg">ROI Calculator</div>
-                    <div className="text-gray-600">Quantify potential savings and revenue opportunities</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 group">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-lg">Strategic Roadmap Development</div>
-                    <div className="text-gray-600">Custom transformation plans aligned with goals</div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a href="/ai-maturity-assessment" className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-blue-500/50 transition-all transform hover:scale-105 text-center">
-                  📊 Take Assessment →
-                </a>
-                <a href="/roi-calculator" className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-green-500/50 transition-all transform hover:scale-105 text-center">
-                  💰 Calculate ROI →
-                </a>
-              </div>
-            </div>
-            <div className="bg-white rounded-3xl p-8 shadow-2xl border border-blue-100 backdrop-blur-lg">
-              <h3 className="text-3xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-                <span className="text-4xl">🎯</span> Assessment Framework
-              </h3>
-              <div className="space-y-5">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border-l-4 border-blue-500 hover:shadow-lg transition-all transform hover:translate-x-2">
-                  <div className="font-bold text-gray-900 text-lg mb-1">📊 Data Infrastructure</div>
-                  <div className="text-sm text-gray-600">Quality, accessibility, governance</div>
-                </div>
-                <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-5 border-l-4 border-purple-500 hover:shadow-lg transition-all transform hover:translate-x-2">
-                  <div className="font-bold text-gray-900 text-lg mb-1">🧠 Talent & Culture</div>
-                  <div className="text-sm text-gray-600">Skills, mindset, change readiness</div>
-                </div>
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-5 border-l-4 border-green-500 hover:shadow-lg transition-all transform hover:translate-x-2">
-                  <div className="font-bold text-gray-900 text-lg mb-1">⚙️ Technology Stack</div>
-                  <div className="text-sm text-gray-600">Tools, platforms, integrations</div>
-                </div>
-                <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-5 border-l-4 border-orange-500 hover:shadow-lg transition-all transform hover:translate-x-2">
-                  <div className="font-bold text-gray-900 text-lg mb-1">🚀 Use Case Portfolio</div>
-                  <div className="text-sm text-gray-600">Current projects, ROI tracking</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 2: Blue Collar Industries - Bold & Modern */}
-      <section className="py-24 bg-gradient-to-br from-slate-900 via-gray-900 to-slate-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzMzMiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzBoLTZ2LTZoNnYuNnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
-        </div>
-        <div className="relative max-w-6xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-5 py-2 rounded-full text-sm font-bold mb-6 shadow-lg shadow-orange-500/50">
-              <span>🔧</span> AI System Development
-            </div>
-            <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
-              We Build <span className="bg-gradient-to-r from-orange-400 via-red-400 to-pink-400 bg-clip-text text-transparent">AI Systems</span> for Blue Collar Industries
-            </h2>
-            <p className="text-2xl text-gray-300 max-w-4xl mx-auto mb-10 leading-relaxed">
-              We don't just advise - <strong className="text-white">we build production-ready AI systems</strong> tailored to the operational realities of traditional industries.
-            </p>
-            <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl p-8 max-w-5xl mx-auto border border-gray-700 shadow-2xl">
-              <div className="grid md:grid-cols-3 gap-8 text-left">
-                <div className="group hover:scale-105 transition-transform">
-                  <div className="text-5xl mb-3">🔧</div>
-                  <div className="font-bold text-white text-xl mb-2">Custom Development</div>
-                  <div className="text-gray-400">We code, train, and deploy AI systems specifically for your operations</div>
-                </div>
-                <div className="group hover:scale-105 transition-transform">
-                  <div className="text-5xl mb-3">📊</div>
-                  <div className="font-bold text-white text-xl mb-2">Data Integration</div>
-                  <div className="text-gray-400">Connect to your ERP, CRM, IoT sensors, legacy databases</div>
-                </div>
-                <div className="group hover:scale-105 transition-transform">
-                  <div className="text-5xl mb-3">🚀</div>
-                  <div className="font-bold text-white text-xl mb-2">Full Deployment</div>
-                  <div className="text-gray-400">Operational systems with training, support, and continuous improvement</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Construction */}
-            <div className="bg-gradient-to-br from-orange-500/10 to-red-500/10 backdrop-blur-sm border-2 border-orange-500/30 rounded-2xl p-8 hover:shadow-2xl hover:shadow-orange-500/20 transition-all transform hover:scale-105">
-              <div className="text-5xl mb-4">🏗️</div>
-              <h3 className="text-3xl font-bold mb-4">Construction</h3>
-              <p className="text-gray-300 mb-6 text-lg">AI-powered project intelligence and operational optimization</p>
-              <ul className="space-y-3">
-                {['Project delay prediction & risk alerts', 'Equipment maintenance optimization', 'Safety compliance automation', 'Bid & proposal generation'].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-orange-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    </div>
-                    <span className="text-gray-200">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Retail */}
-            <div className="bg-gradient-to-br from-blue-500/10 to-indigo-500/10 backdrop-blur-sm border-2 border-blue-500/30 rounded-2xl p-8 hover:shadow-2xl hover:shadow-blue-500/20 transition-all transform hover:scale-105">
-              <div className="text-5xl mb-4">🛒</div>
-              <h3 className="text-3xl font-bold mb-4">Retail</h3>
-              <p className="text-gray-300 mb-6 text-lg">Customer intelligence and inventory optimization systems</p>
-              <ul className="space-y-3">
-                {['Predictive inventory management', 'Customer behavior prediction', 'Dynamic pricing strategies', 'Supply chain intelligence'].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    </div>
-                    <span className="text-gray-200">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Hospitality */}
-            <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-sm border-2 border-purple-500/30 rounded-2xl p-8 hover:shadow-2xl hover:shadow-purple-500/20 transition-all transform hover:scale-105">
-              <div className="text-5xl mb-4">🏨</div>
-              <h3 className="text-3xl font-bold mb-4">Hospitality</h3>
-              <p className="text-gray-300 mb-6 text-lg">Guest experience and revenue optimization platforms</p>
-              <ul className="space-y-3">
-                {['Demand forecasting & capacity planning', 'Intelligent staff scheduling', 'Guest experience personalization', 'Revenue management systems'].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    </div>
-                    <span className="text-gray-200">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Insurance */}
-            <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 backdrop-blur-sm border-2 border-green-500/30 rounded-2xl p-8 hover:shadow-2xl hover:shadow-green-500/20 transition-all transform hover:scale-105">
-              <div className="text-5xl mb-4">🛡️</div>
-              <h3 className="text-3xl font-bold mb-4">Insurance</h3>
-              <p className="text-gray-300 mb-6 text-lg">Claims automation and risk assessment platforms</p>
-              <ul className="space-y-3">
-                {['Automated claims processing', 'AI-powered risk assessment', 'Fraud detection systems', 'Policy underwriting optimization'].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    </div>
-                    <span className="text-gray-200">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="text-center mt-16">
-            <a href="/contact" className="inline-block bg-gradient-to-r from-orange-500 to-red-500 text-white px-12 py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-orange-500/50 transition-all transform hover:scale-105">
-              💬 Discuss Your AI System Development →
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 3: Sturgeon AI - Premium Product Section */}
-      <section className="py-24 bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-50 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-cyan-200/30 rounded-full blur-3xl"></div>
-        <div className="relative max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="bg-white rounded-3xl p-10 shadow-2xl border border-cyan-100">
-              <div className="text-6xl mb-6">🐟</div>
-              <h3 className="text-4xl font-bold text-gray-900 mb-8">Sturgeon AI Features</h3>
-              <div className="space-y-5">
-                {[
-                  {icon: '📊', title: 'Contract Analytics', desc: 'Historical spend patterns & agency trends'},
-                  {icon: '🎯', title: 'Opportunity Scoring', desc: 'AI-powered win probability assessment'},
-                  {icon: '👥', title: 'Teaming Recommendations', desc: 'Find complementary partners'},
-                  {icon: '📝', title: 'Proposal Intelligence', desc: 'Past performance insights & win themes'}
-                ].map((feature, i) => (
-                  <div key={i} className="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl p-5 border-l-4 border-cyan-500 hover:shadow-lg transition-all transform hover:translate-x-2">
-                    <div className="flex items-start gap-4">
-                      <span className="text-3xl">{feature.icon}</span>
-                      <div>
-                        <div className="font-bold text-gray-900 text-lg mb-1">{feature.title}</div>
-                        <div className="text-sm text-gray-600">{feature.desc}</div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-5 py-2 rounded-full text-sm font-bold mb-6 shadow-lg">
-                <span>🐟</span> AI-Powered Intelligence Platform
-              </div>
-              <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
-                Sturgeon AI: <span className="bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">Smart Contract Intelligence</span>
-              </h2>
-              <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-                Navigate complex contracting landscapes with AI-powered intelligence. Track opportunities, analyze competitors, and win more business.
-              </p>
-              <div className="space-y-5 mb-10">
-                {[
-                  {title: 'Real-Time Opportunity Tracking', desc: 'Monitor multiple sources and contract modifications 24/7'},
-                  {title: 'Competitor Intelligence', desc: 'Track who\'s winning what and their proven strategies'},
-                  {title: 'Contract Vehicle Matching', desc: 'Find the right vehicles for your capabilities'}
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-4 group">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
-                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    </div>
-                    <div>
-                      <div className="font-bold text-gray-900 text-lg">{item.title}</div>
-                      <div className="text-gray-600">{item.desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <a href="/products/sturgeon-ai" className="inline-block bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-10 py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-cyan-500/50 transition-all transform hover:scale-105">
-                🐟 Explore Sturgeon AI →
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 4: GovCon Services - Separate from Sturgeon AI */}
-      <section className="py-24 bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute w-96 h-96 top-0 right-0 bg-indigo-500/20 rounded-full blur-3xl"></div>
-          <div className="absolute w-96 h-96 bottom-0 left-0 bg-purple-500/20 rounded-full blur-3xl"></div>
-        </div>
-        <div className="relative max-w-6xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-5 py-2 rounded-full text-sm font-bold mb-6 shadow-lg shadow-yellow-500/50">
-              <span>🏛️</span> Government Contracting Services
-            </div>
-            <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 bg-clip-text text-transparent">Government Contracting</span> Expertise
-            </h2>
-            <p className="text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Specialized consulting and services for navigating the federal contracting ecosystem. From SAM registration to proposal writing to compliance.
+            <p className="caption-3 mt-12 flex flex-wrap items-center gap-x-4 gap-y-2 text-ink-muted">
+              <span className="text-ink-secondary">SBA-certified SDVOSB</span>
+              <span aria-hidden="true">·</span>
+              <span>CAGE <span className="font-mono text-ink-secondary">{site.cage}</span></span>
+              <span aria-hidden="true">·</span>
+              <span>UEI <span className="font-mono text-ink-secondary">{site.uei}</span></span>
             </p>
           </div>
+          <div className="lg:col-span-5">
+            <MaturityVisual />
+          </div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: '📋',
-                title: 'Registration & Compliance',
-                items: ['SAM.gov registration', 'CAGE code acquisition', 'Certification assistance', 'Compliance audits']
-              },
-              {
-                icon: '🎯',
-                title: 'Opportunity Capture',
-                items: ['Market research', 'Capability statements', 'Teaming & partnerships', 'Bid/no-bid decisions']
-              },
-              {
-                icon: '✍️',
-                title: 'Proposal Development',
-                items: ['Technical writing', 'Past performance', 'Pricing strategies', 'Submission management']
-              }
-            ].map((service, i) => (
-              <div key={i} className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:shadow-2xl hover:shadow-purple-500/20 transition-all transform hover:scale-105">
-                <div className="text-6xl mb-6">{service.icon}</div>
-                <h3 className="text-2xl font-bold mb-6">{service.title}</h3>
-                <ul className="space-y-3">
-                  {service.items.map((item, j) => (
-                    <li key={j} className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <svg className="w-4 h-4 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                      </div>
-                      <span className="text-gray-200">{item}</span>
-                    </li>
+      {/* Problem */}
+      <section className="section">
+        <div className="container-page grid gap-16 lg:grid-cols-12">
+          <div className="lg:col-span-5" data-reveal>
+            <p className="eyebrow">The problem</p>
+            <h2 className="heading-2 mt-4 text-ink">Most AI work stalls between the pilot and the payoff.</h2>
+            <p className="body-2 mt-6 text-ink-secondary">
+              The demo looks good. Months later, nothing on the floor has changed. It usually comes down to one of three gaps.
+            </p>
+          </div>
+          <ol className="lg:col-span-6 lg:col-start-7">
+            {stalls.map(([t, b], i) => (
+              <li key={t} className="flex gap-6 border-t border-line py-8 last:border-b" data-reveal>
+                <span className="font-mono text-sm text-ink-accent">0{i + 1}</span>
+                <div>
+                  <h3 className="title-1 text-ink">{t}</h3>
+                  <p className="body-3 mt-2 text-ink-secondary">{b}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Approach */}
+      <section id="approach" className="section scroll-mt-16 bg-surface-sunken">
+        <div className="container-page">
+          <div className="max-w-prose" data-reveal>
+            <p className="eyebrow">How we work</p>
+            <h2 className="heading-2 mt-4 text-ink">Assess. Build. Train and run.</h2>
+            <p className="body-2 mt-6 text-ink-secondary">One method, three phases, and a clear deliverable at the end of each one, so you always know what you paid for.</p>
+          </div>
+          <div className="mt-16 grid items-start gap-6 lg:grid-cols-3">
+            {steps.map((s, i) => (
+              <article key={s.n} className={`flex flex-col rounded-2xl border border-line bg-surface-raised p-8 ${i === 1 ? 'lg:mt-12' : ''}`} data-reveal>
+                <div className="flex items-center justify-between">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy-900 text-gold-400"><Icon name={s.icon} /></span>
+                  <span className="font-mono text-sm text-ink-muted">{s.n}</span>
+                </div>
+                <h3 className="heading-4 mt-8 text-ink">{s.title}</h3>
+                <p className="body-3 mt-4 text-ink-secondary">{s.body}</p>
+                <ul className="mt-8 space-y-3 border-t border-line pt-6">
+                  {s.out.map((o) => (
+                    <li key={o} className="body-4 flex gap-3 text-ink"><Icon name="check" className="mt-0.5 h-5 w-5 shrink-0 text-icon-accent" />{o}</li>
                   ))}
                 </ul>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Tagline */}
+      <section className="section">
+        <div className="container-page">
+          <p className="heading-2 max-w-4xl text-ink" data-reveal>
+            We don’t hand you a deck and leave. <span className="text-ink-muted">We build it, prove it against the numbers, and teach your people to run it.</span>
+          </p>
+        </div>
+      </section>
+
+      {/* Who we serve */}
+      <section className="section border-t border-line">
+        <div className="container-page grid gap-16 lg:grid-cols-12">
+          <div className="lg:col-span-4" data-reveal>
+            <p className="eyebrow">Who we serve</p>
+            <h2 className="heading-3 mt-4 text-ink">Organizations where the work is real and the margin for error is small.</h2>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:col-span-8">
+            {audiences.map((a, i) => (
+              <Link key={a.title} href={a.href} className={`group flex flex-col rounded-2xl border border-line bg-surface-raised p-8 transition-colors duration-300 ease-brand hover:border-line-strong hover:bg-surface-sunken ${i === 0 ? 'sm:col-span-2' : ''}`} data-reveal>
+                <span className="text-icon-accent"><Icon name={a.icon} className="h-8 w-8" /></span>
+                <h3 className="heading-4 mt-6 text-ink">{a.title}</h3>
+                <p className="body-3 mt-4 max-w-prose text-ink-secondary">{a.body}</p>
+                <span className="body-4 mt-8 inline-flex items-center gap-2 font-semibold text-ink">
+                  {a.link}
+                  <Icon name="arrow-right" className="h-4 w-4 transition-transform duration-500 ease-brand group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Platforms */}
+      <section id="platforms" className="theme-dark section scroll-mt-16 bg-surface">
+        <div className="container-page">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-end" data-reveal>
+            <div className="lg:col-span-7">
+              <p className="eyebrow">Platforms</p>
+              <h2 className="heading-2 mt-4 text-ink">We use what we build.</h2>
+            </div>
+            <p className="body-2 text-ink-secondary lg:col-span-5">Our federal contracting platforms came out of the same method we bring to clients: find the decision that matters, then build the tool that makes it faster.</p>
+          </div>
+          <div className="mt-16 grid gap-6 lg:grid-cols-3">
+            {platforms.map((p) => {
+              const inner = (
+                <>
+                  <p className="caption-2 text-ink-accent">{p.tag}</p>
+                  <h3 className="heading-4 mt-4 text-ink">{p.name}</h3>
+                  <p className="body-3 mt-4 flex-1 text-ink-secondary">{p.body}</p>
+                  <span className="body-4 mt-8 inline-flex items-center gap-2 font-semibold text-ink">
+                    {p.cta}
+                    <Icon name={p.ext ? 'arrow-up-right' : 'arrow-right'} className="h-4 w-4" />
+                    {p.ext && <span className="sr-only">(opens in a new tab)</span>}
+                  </span>
+                </>
+              );
+              const cls = 'group flex flex-col rounded-2xl border border-line bg-surface-raised p-8 transition-colors duration-300 ease-brand hover:border-line-strong';
+              return p.ext ? (
+                <a key={p.name} href={p.href} target="_blank" rel="noopener noreferrer" className={cls} data-reveal>{inner}</a>
+              ) : (
+                <Link key={p.name} href={p.href} className={cls} data-reveal>{inner}</Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Founder */}
+      <section className="section">
+        <div className="container-page grid items-center gap-16 lg:grid-cols-12">
+          <div className="lg:col-span-5" data-reveal>
+            <div className="flex aspect-[4/5] items-center justify-center rounded-2xl border border-dashed border-gold-500 bg-sand-100 p-8 text-center">
+              <Placeholder name="founder_photo" note="A real, approved portrait of Harold" />
+            </div>
+          </div>
+          <div className="lg:col-span-6 lg:col-start-7" data-reveal>
+            <p className="eyebrow">Leadership</p>
+            <h2 className="heading-3 mt-4 text-ink">Led by a service-disabled veteran who has competed for federal work and won.</h2>
+            <p className="body-2 mt-6 text-ink-secondary">
+              {site.founder} is a service-disabled veteran and the founder of Trapier Management. The firm runs on a simple standard: clear objectives, honest status, and nothing called done until it works.
+            </p>
+            <p className="body-2 mt-4 text-ink-secondary">
+              Before Trapier, Harold won seven federal contracts, worth close to $6M, with a previous company. That experience shapes how we build our GovCon platforms and how we work with federal buyers.
+            </p>
+            <p className="body-4 mt-8 text-ink-muted">{site.founder}, {site.founderTitle}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Proof (placeholders until real, approved results exist) */}
+      <section className="section border-t border-line bg-surface-sunken">
+        <div className="container-page">
+          <div className="max-w-prose" data-reveal>
+            <p className="eyebrow">Results</p>
+            <h2 className="heading-3 mt-4 text-ink">Client results, in their words.</h2>
+          </div>
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            {['case_study_1', 'testimonial_1'].map((k) => (
+              <div key={k} className="rounded-2xl border border-dashed border-gold-500 bg-surface-raised p-8" data-reveal>
+                <Placeholder name={k} note="Add only a real client result with the client’s written permission" />
+                <p className="body-4 mt-4 text-ink-muted">Replace with a real, permissioned client result before launch. This block does not render a claim.</p>
               </div>
             ))}
           </div>
-
-          <div className="text-center mt-16">
-            <a href="/contact" className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-12 py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-yellow-500/50 transition-all transform hover:scale-105">
-              🏛️ Discuss GovCon Services →
-            </a>
-          </div>
         </div>
       </section>
 
-      {/* Final CTA - Premium Gradient */}
-      <section className="py-24 bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDMwaC02di02aDZ2Ljh6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30"></div>
-        </div>
-        <div className="relative max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-6 leading-tight drop-shadow-lg">
-            Ready to Transform Your Business? 🚀
-          </h2>
-          <p className="text-2xl text-white/90 mb-10 leading-relaxed">
-            Whether you need strategic AI consulting, custom system development, or specialized contracting services - we're here to help.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-5 justify-center">
-            <a href="/ai-maturity-assessment" className="bg-white text-gray-900 px-12 py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:bg-gray-100 transition-all transform hover:scale-105">
-              📊 Free AI Assessment
-            </a>
-            <a href="/contact" className="backdrop-blur-md bg-white/20 border-2 border-white text-white px-12 py-5 rounded-xl font-bold text-xl hover:bg-white/30 transition-all transform hover:scale-105">
-              📞 Schedule Consultation
-            </a>
+      {/* FAQ */}
+      <section className="section">
+        <div className="container-page grid gap-16 lg:grid-cols-12">
+          <div className="lg:col-span-4" data-reveal>
+            <p className="eyebrow">Questions</p>
+            <h2 className="heading-3 mt-4 text-ink">What people ask before they start.</h2>
+            <p className="body-3 mt-6 text-ink-secondary">Something else on your mind? <Link href="/contact" className="font-semibold text-ink underline decoration-gold-500 underline-offset-4">Send us a note</Link>.</p>
           </div>
+          <div className="lg:col-span-8" data-reveal><Faq items={faqs} /></div>
         </div>
       </section>
+
+      <CtaBand
+        heading="Find out where AI will pay back first."
+        body="Three questions, a score on screen, and a clear next step if you want one."
+        reversal="Free. No call required to see your score."
+      />
     </main>
   );
 }
